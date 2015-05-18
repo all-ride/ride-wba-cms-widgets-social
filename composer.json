@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-0": {
-            "ride\\application\\orm\\": ["src/"]
+            "ride\\web\\cms\\controller\\widget\\": ["src/"]
         }
     }
 }

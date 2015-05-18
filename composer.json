@@ -1,0 +1,27 @@
+{
+    "name": "ride/wba-cms-widgets-social",
+    "description": "A collection of social media widgets",
+    "version": "0.1.0",
+    "authors": [
+        {
+            "name": "Ward Brems",
+            "email": "ward@statik.be"
+        }
+    ],
+    "require": {
+        "ride/lib-cms": ">=0.16.0",
+        "ride/lib-common": ">=0.4.0",
+        "ride/lib-form": ">=0.13.0",
+        "ride/lib-i18n": ">=0.1.0",
+        "ride/lib-validation": ">=0.1.0",
+        "ride/lib-widget": ">=0.1.1",
+        "ride/web-base": ">=0.7.6",
+        "ride/web-cms": ">=0.16.0",
+        "ride/web-form": ">=0.4.6"
+    },
+    "autoload": {
+        "psr-0": {
+            "ride\\application\\orm\\": ["src/"]
+        }
+    }
+}

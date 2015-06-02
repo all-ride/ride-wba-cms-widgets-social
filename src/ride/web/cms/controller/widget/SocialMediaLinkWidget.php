@@ -38,6 +38,10 @@ class SocialMediaLinkWidget extends AbstractWidget implements StyleWidget{
     public function indexAction(Config $config) {
         $socialMedia = $config->get('social');
         $values =  unserialize($this->properties->getWidgetProperty('social.widgets'));
+        if (!$values) {
+            return;
+        }
+
         $data = array(
             'socialMedia' => array(),
             'title' => $this->properties->getWidgetProperty('title'),
@@ -83,8 +87,14 @@ class SocialMediaLinkWidget extends AbstractWidget implements StyleWidget{
      */
     public function propertiesAction(SocialMediaComponent $component) {
         $translator = $this->getTranslator();
+
+        $unserializedData = unserialize($this->properties->getWidgetProperty('social.widgets'));
+        if (!$unserializedData) {
+
+            $unserializedData = array();
+        }
         $data = array(
-            'socialMedia' => unserialize($this->properties->getWidgetProperty('social.widgets')),
+            'socialMedia' => $unserializedData,
         );
 
         $form = $this->createFormBuilder($data);

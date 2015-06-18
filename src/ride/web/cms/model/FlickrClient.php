@@ -42,6 +42,8 @@ class FlickrClient extends CurlClient {
     public function call($method, $params = array()) {
         $params['method'] = $method;
         $params['api_key'] = $this->getApiKey();
+        $params['format'] = 'json';
+        $params['nojsoncallback'] = 1;
 
         $encoded_params = array();
 
@@ -52,7 +54,25 @@ class FlickrClient extends CurlClient {
         $url = $this->getHost() . '?' . implode('&', $encoded_params);
 
         $request = $this->createRequest('GET', $url);
-        return $this->sendRequest($request);
+        $response = $this->sendRequest($request);
+        return $this->convertResponse($response);
+    }
+
+    /**
+     * Convert a JSON response and return an array.
+     *
+     * @param \ride\library\http\Response $response
+     * @return array
+     */
+    public function convertResponse($response) {
+        if ($response->getStatusCode() != 200) {
+            return null;
+        }
+
+        $body = $response->getBody();
+        $response->setBody(json_decode($body));
+
+        return $response;
     }
 
     /**

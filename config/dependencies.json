@@ -1,19 +1,28 @@
 {
-    "dependencies": [
-        {
-            "interfaces": "ride\\library\\cms\\widget\\Widget",
-            "class": "ride\\web\\cms\\controller\\widget\\SocialMediaLinkWidget",
-            "id": "social.media.links"
-        },
-        {
-            "interfaces": "ride\\library\\cms\\widget\\Widget",
-            "class": "ride\\web\\cms\\controller\\widget\\SocialMediaShareWidget",
-            "id": "social.media.share"
-        },
-        {
-            "interfaces": "ride\\library\\form\\component\\Component",
-            "class": "ride\\web\\cms\\controller\\widget\\component\\SocialMediaComponent",
-            "id": "social.media.component"
-        }
-    ]
+	"dependencies": [
+		{
+			"interfaces": "ride\\library\\cms\\widget\\Widget",
+			"class": "ride\\web\\cms\\controller\\widget\\SocialMediaLinkWidget",
+			"id": "social.media.links"
+		},
+		{
+			"interfaces": "ride\\library\\cms\\widget\\Widget",
+			"class": "ride\\web\\cms\\controller\\widget\\SocialMediaShareWidget",
+			"id": "social.media.share"
+		},
+		{
+			"interfaces": "ride\\library\\form\\component\\Component",
+			"class": "ride\\web\\cms\\controller\\widget\\component\\SocialMediaComponent",
+			"id": "social.media.component"
+		},
+		{
+			"interfaces": "ride\\library\\http\\client\\Client",
+			"class": "ride\\web\\cms\\model\\FlickrCLient",
+			"id": "client.flickr"
+		},
+		{
+			"class": "ride\\web\\cms\\model\\FlickrModel",
+			"id": "model.flickr"
+		}
+	]
 }

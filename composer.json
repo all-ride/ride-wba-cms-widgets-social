@@ -1,3 +1,4 @@
+
 {
     "name": "ride/wba-cms-widgets-social",
     "description": "A collection of social media widgets",
@@ -21,7 +22,7 @@
     },
     "autoload": {
         "psr-0": {
-            "ride\\web\\cms\\controller\\widget\\": ["src/"]
+            "ride\\web\\cms\\": ["src/"]
         }
     }
 }

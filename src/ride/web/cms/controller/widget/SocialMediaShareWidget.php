@@ -41,6 +41,7 @@ class SocialMediaShareWidget extends AbstractWidget implements StyleWidget{
         $data = array(
             'socialMedia' => $media ? explode(',', $media) : array()
         );
+
         $this->setTemplateView($this->getTemplate(static::TEMPLATE_NAMESPACE . '/social.media.share'), $data);
     }
 
@@ -71,9 +72,8 @@ class SocialMediaShareWidget extends AbstractWidget implements StyleWidget{
     public function propertiesAction() {
         $translator = $this->getTranslator();
         $data = array(
-            'shareMedia' => explode(',', $this->properties->getWidgetProperty(self::PROPERTY_SHARE_MEDIA)),
+            'shareMedia' => array_flip(explode(',', $this->properties->getWidgetProperty(self::PROPERTY_SHARE_MEDIA))),
         );
-
         $form = $this->createFormBuilder($data);
         $form->addRow('title', 'string', array(
             'label' => $translator->translate('label.title'),
@@ -104,7 +104,6 @@ class SocialMediaShareWidget extends AbstractWidget implements StyleWidget{
             try {
                 $form->validate();
                 $data = $form->getData();
-
                 if ($data['shareMedia']) {
                     $data = implode(',', array_keys($data['shareMedia']));
                     $this->properties->setWidgetProperty(self::PROPERTY_SHARE_MEDIA, $data);

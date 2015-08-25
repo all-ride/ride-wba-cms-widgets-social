@@ -34,12 +34,19 @@ class SocialMediaShareWidget extends AbstractWidget implements StyleWidget{
     const PROPERTY_SHARE_MEDIA = 'share.media';
 
     /**
+     * Name of title property
+     * @var string
+     */
+    const PROPERTY_TITLE = 'title';
+
+    /**
      * Render the social media links.
      */
     public function indexAction() {
         $media = $this->properties->getWidgetProperty(self::PROPERTY_SHARE_MEDIA);
         $data = array(
-            'socialMedia' => $media ? explode(',', $media) : array()
+            'socialMedia' => $media ? explode(',', $media) : array(),
+            'title' => $this->properties->getLocalizedWidgetProperty($this->locale, self::PROPERTY_TITLE),
         );
 
         $this->setTemplateView($this->getTemplate(static::TEMPLATE_NAMESPACE . '/social.media.share'), $data);
@@ -51,8 +58,11 @@ class SocialMediaShareWidget extends AbstractWidget implements StyleWidget{
      */
     public function getPropertiesPreview() {
         $preview = "";
+        if ($this->properties->getLocalizedWidgetProperty($this->locale, self::PROPERTY_TITLE)) {
+            $preview .= $this->getTranslator()->translate('label.title') . ' : ' . $this->properties->getLocalizedWidgetProperty($this->locale, self::PROPERTY_TITLE) . '<br />';
+        }
 
-        $data = $this->properties->getWidgetProperty(self::PROPERTY_SHARE_MEDIA);
+        $data = $this->properties->getLocalizedWidgetProperty($this->locale, self::PROPERTY_SHARE_MEDIA);
         if ($data) {
             $data = explode(',', $data);
             $preview .= "<ul>";
@@ -71,9 +81,12 @@ class SocialMediaShareWidget extends AbstractWidget implements StyleWidget{
      */
     public function propertiesAction() {
         $translator = $this->getTranslator();
+
         $data = array(
+            'title' => $this->properties->getLocalizedWidgetProperty($this->locale, self::PROPERTY_TITLE),
             'shareMedia' => array_flip(explode(',', $this->properties->getWidgetProperty(self::PROPERTY_SHARE_MEDIA))),
         );
+
         $form = $this->createFormBuilder($data);
         $form->addRow('title', 'string', array(
             'label' => $translator->translate('label.title'),
@@ -105,9 +118,10 @@ class SocialMediaShareWidget extends AbstractWidget implements StyleWidget{
                 $form->validate();
                 $data = $form->getData();
                 if ($data['shareMedia']) {
-                    $data = implode(',', array_keys($data['shareMedia']));
-                    $this->properties->setWidgetProperty(self::PROPERTY_SHARE_MEDIA, $data);
+                    $values = implode(',', array_keys($data['shareMedia']));
+                    $this->properties->setWidgetProperty(self::PROPERTY_SHARE_MEDIA, $values);
                 }
+                $this->properties->setLocalizedWidgetProperty($this->locale, self::PROPERTY_TITLE, $data['title']);
 
                 return true;
             } catch (ValidationException $exception) {

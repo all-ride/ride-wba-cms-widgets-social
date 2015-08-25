@@ -32,6 +32,12 @@ class SocialMediaLinkWidget extends AbstractWidget implements StyleWidget{
     const TEMPLATE_NAMESPACE = 'cms/widget/social-media';
 
     /**
+     * Name of title property
+     * @var string
+     */
+    const PROPERTY_TITLE = 'title';
+
+    /**
      * Render the social media links.
      * @param Config $config
      */
@@ -44,7 +50,7 @@ class SocialMediaLinkWidget extends AbstractWidget implements StyleWidget{
 
         $data = array(
             'socialMedia' => array(),
-            'title' => $this->properties->getWidgetProperty('title'),
+            'title' => $this->properties->getLocalizedWidgetProperty($this->locale, self::PROPERTY_TITLE),
         );
 
         foreach ($values as $value) {
@@ -66,9 +72,9 @@ class SocialMediaLinkWidget extends AbstractWidget implements StyleWidget{
     public function getPropertiesPreview() {
         $preview = "";
 
-        if ($this->properties->getWidgetProperty('title')) {
+        if ($this->properties->getLocalizedWidgetProperty($this->locale, self::PROPERTY_TITLE)) {
             $preview .= "<strong>" . $this->getTranslator()->translate('label.title') . "</strong> : " .
-                $this->properties->getWidgetProperty('title') . "<br />";
+                $this->properties->getLocalizedWidgetProperty($this->locale, self::PROPERTY_TITLE) . "<br />";
         }
         $values = unserialize($this->properties->getWidgetProperty('social.widgets'));
         if ($values) {
@@ -94,6 +100,7 @@ class SocialMediaLinkWidget extends AbstractWidget implements StyleWidget{
             $unserializedData = array();
         }
         $data = array(
+            'title' => $this->properties->getLocalizedWidgetProperty($this->locale, self::PROPERTY_TITLE),
             'socialMedia' => $unserializedData,
         );
 
@@ -132,7 +139,7 @@ class SocialMediaLinkWidget extends AbstractWidget implements StyleWidget{
                 if ($values) {
                     $this->properties->setWidgetProperty('social.widgets', serialize($values));
                 }
-                $this->properties->setWidgetProperty('title', $data['title'] ? $data['title'] : '');
+                $this->properties->setLocalizedWidgetProperty($this->locale, self::PROPERTY_TITLE, $data['title'] ? $data['title'] : '');
 
 
                 return true;
